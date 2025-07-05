@@ -20,6 +20,7 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
 - Sistem Transaksi
   - Proses checkout
   - Riwayat transaksi
+  - Simpan detail transaksi ke database
 - Panel Admin
   - Manajemen produk (CRUD)
   - Manajemen kategori
@@ -28,6 +29,13 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
 - Sistem Autentikasi
   - Login/Register pengguna
   - Manajemen akun
+- Diskon Otomatis
+  - Diskon berdasarkan tanggal (diskon harian)
+  - Diterapkan saat produk dimasukkan ke keranjang
+  - Tersimpan ke dalam data transaksi
+- Perhitungan Ongkir
+  - Menggunakan API RajaOngkir
+  - Pilih kelurahan tujuan, tampilkan biaya ongkir otomatis
 - UI Responsif dengan NiceAdmin template
 
 ## Persyaratan Sistem
@@ -64,6 +72,9 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
    ```bash
    php spark db:seed UserSeeder
    ```
+   ```bash
+   php spark db:seed DiskonSeeder
+   ```
 6. **Jalankan server**
    ```bash
    php spark serve
@@ -79,11 +90,22 @@ Proyek menggunakan struktur MVC CodeIgniter 4:
   - AuthController.php - Autentikasi pengguna
   - ProdukController.php - Manajemen produk
   - TransaksiController.php - Proses transaksi
+  - DiskonController.php - Menampilkan, tambah, edit, hapus data diskon
 - app/Models - Model untuk interaksi database
   - ProductModel.php - Model produk
   - UserModel.php - Model pengguna
+  - diskonModel.php - Model diskon
 - app/Views - Template dan komponen UI
   - v_produk.php - Tampilan produk
   - v_keranjang.php - Halaman keranjang
+  - v_checkout.php - Halaman checkout
+  - v_diskon.php - Halaman daftar diskon
 - public/img - Gambar produk dan aset
 - public/NiceAdmin - Template admin
+
+# Update Repository
+
+- git pull origin main
+- git add .
+- git commit -m "tuliskan perubahan disini"
+- git push origin main
