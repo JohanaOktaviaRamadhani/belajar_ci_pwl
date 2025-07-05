@@ -7,7 +7,7 @@ use Dompdf\Dompdf;
 
 class ProdukController extends BaseController
 {
-    protected $product; 
+    protected $product;
 
     function __construct()
     {
@@ -21,7 +21,6 @@ class ProdukController extends BaseController
 
         return view('v_produk', $data);
     }
-
     public function create()
     {
         $dataFoto = $this->request->getFile('foto');
@@ -42,8 +41,7 @@ class ProdukController extends BaseController
         $this->product->insert($dataForm);
 
         return redirect('produk')->with('success', 'Data Berhasil Ditambah');
-    } 
-
+    }
     public function edit($id)
     {
         $dataProduk = $this->product->find($id);
@@ -86,31 +84,30 @@ class ProdukController extends BaseController
 
         return redirect('produk')->with('success', 'Data Berhasil Dihapus');
     }
-
-    public function download()
+        public function download()
     {
-            //get data from database
+		//get data from database
         $product = $this->product->findAll();
 
-            //pass data to file view
+		//pass data to file view
         $html = view('v_produkPDF', ['product' => $product]);
 
-            //set the pdf filename
+		//set the pdf filename
         $filename = date('y-m-d-H-i-s') . '-produk';
 
-        // instantiate and use the dompdf class
+    // instantiate and use the dompdf class
         $dompdf = new Dompdf();
 
-        // load HTML content (file view)
+    // load HTML content (file view)
         $dompdf->loadHtml($html);
 
-        // (optional) setup the paper size and orientation
+    // (optional) setup the paper size and orientation
         $dompdf->setPaper('A4', 'potrait');
 
-        // render html as PDF
+    // render html as PDF
         $dompdf->render();
 
-        // output the generated pdf
+    // output the generated pdf
         $dompdf->stream($filename);
     }
 }

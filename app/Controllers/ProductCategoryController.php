@@ -6,41 +6,50 @@ use App\Models\ProductCategoryModel;
 
 class ProductCategoryController extends BaseController
 {
-    protected $kategoriModel;
+    protected $productkategori;
 
     public function __construct()
     {
-        $this->kategoriModel = new ProductCategoryModel();
+        $this->productkategori = new ProductCategoryModel();
     }
 
     public function index()
     {
-        $data['kategori'] = $this->kategoriModel->findAll();
-        return view('v_productcategory', $data);
+        $productkategori = $this->productkategori->findAll();
+        $data['productkategori'] = $productkategori;
+
+        return view('v_product_category', $data);
     }
 
     public function create()
     {
-        $this->kategoriModel->insert([
-            'kategori' => $this->request->getPost('nama')
-        ]);
-        return redirect()->to('kategori-produk')->with('success', 'Data Berhasil Ditambah');
-    }
-
-    public function update($id)
-    {
-        $data = [
-            'kategori' => $this->request->getPost('nama')
+        $dataForm = [
+            'category_name' => $this->request->getPost('nama'),
+            'created_at' => date("Y-m-d H:i:s")
         ];
 
-        $this->kategoriModel->update($id, $data);
+        $this->productkategori->insert($dataForm);
 
-        return redirect()->to('/kategori-produk')->with('success', 'Kategori berhasil diupdate.');
+        return redirect()->to('produk_kategori')->with('success', 'Data Berhasil Ditambah');
+    }
+
+    public function edit($id)
+    {
+        $dataForm = [
+            'category_name' => $this->request->getPost('nama'),
+            'updated_at' => date("Y-m-d H:i:s")
+        ];
+
+        $this->productkategori->update($id, $dataForm);
+
+        return redirect()->to('produk_kategori')->with('success', 'Data Berhasil Diubah');
     }
 
     public function delete($id)
     {
-        $this->kategoriModel->delete($id);
-        return redirect()->to('kategori-produk')->with('success', 'Data Berhasil Dihapus');
+        $this->productkategori->delete($id);
+
+        return redirect()->to('produk_kategori')->with('success', 'Data Berhasil Dihapus');
     }
+
 }
